@@ -10,17 +10,8 @@ You'll want to reference spinBox.css then:
 import SpinBox from "./SpinBox.js";
 
 // create instance
-var modal = new ModalWindow({title: "Modal Window"});
-
-// add elements
-modal.addElement("<HTML Element>");
-
-// or markup
-modal.addMarkup("<HTML markup>");
+var spinBox = new SpinBox({label: "spin box", min: 0});
 
 // append to your page
-document.body.appendChild(modal);
-
-// open
-modal.open();
+document.body.appendChild(spinBox);
 ```
