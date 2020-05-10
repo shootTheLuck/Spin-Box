@@ -1,75 +1,68 @@
 
 .spinBox {
     position: relative;
-    height: 1.8em;
+    height: 1.6em;
     display: block;
+    width: 14em;
+    margin: 0.3em;
+    padding: 0;
 /*
     border: 0.1em solid red;
 */
-/*
-    width: fit-content;
-*/
-    width: 12.8em;
-    margin: 0.1em;
-    padding: 0;
-}
-
-.spinBoxDiv {
-    position:absolute;
-    display: inline-block;
-    width: 5.8em;
-    height: 1.6em;
-    right: 0;
 }
 
 .spinBoxLabel {
     padding: 0.5em;
     user-select: none;
+    width: 7em;
+    vertical-align: middle;
 }
 
 .spinBox input {
+    position: absolute;
     box-sizing: border-box;
-    border: 0.1em solid rgb(64,64,64);
+    border: 0.1em solid rgb(64, 64, 64);
     border-right: none;
     border-top-left-radius: 0.1em;
     border-bottom-left-radius: 0.1em;
-    color: rgb(64,64,64);
+    color: rgb(64, 64, 64);
     font-family: inherit;
     font-size: 1em;
     text-align: right;
-    box-shadow: 0 0.525em 0.125em rgba(0,0,0,0.03125) inset;
+    box-shadow: 0 0.525em 0.125em rgba(0, 0, 0, 0.03125) inset;
     height: 1.6em;
     width: 5em;
+    right: 0.76em;
 }
 
 .spinBox input[disabled] {
-    background: rgb(240,240,240);
+    background: rgb(240, 240, 240);
 }
 
 .spinBoxUp:hover, .spinBoxDown:hover {
-    background-color: rgb(255,255,255);
+    background-color: rgb(255, 255, 255);
 }
 
 .spinBoxUp:active, .spinBoxDown:active {
-    background-color: rgb(200,200,200);
+    background-color: rgb(200, 200, 200);
 }
 
 .spinBoxUp {
     top: 0;
-    border-bottom: 0.075em solid rgb(64,64,64);
+    border-bottom: 0.075em solid rgb(64, 64, 64);
     border-top-right-radius: 0.1em;
 }
 
 .spinBoxDown {
      bottom: 0;
-     border-top: 0.075em solid rgb(64,64,64);
+     border-top: 0.075em solid rgb(64, 64, 64);
      border-bottom-right-radius: 0.1em;
 }
 
 .spinBoxUpArrow, .spinBoxDownArrow{
     box-sizing: border-box;
     position: absolute;
-    border: solid rgb(30,30,30);
+    border: solid rgb(30, 30, 30);
     border-width: 0 0.12em 0.12em 0;
     display: inline-block;
     padding: 2px;
@@ -87,20 +80,20 @@
 }
 
 .spinBoxUp, .spinBoxDown {
-    background-color: rgb(240,240,240);
+    background-color: rgb(240, 240, 240);
     position: absolute;
     right: 0;
     display: block;
     box-sizing: border-box;
     width: 0.8em;
     height: 0.8em;
-    border: 0.1em solid rgb(64,64,64);
+    border: 0.1em solid rgb(64, 64, 64);
     cursor: pointer;
     margin: 0;
     padding: 0;
 }
 
 .spinBox input[disabled] + span, .spinBox input[disabled] + span + span {
-     background: rgb(240,240,240);
+     background: rgb(240, 240, 240);
      cursor: auto;
 }
