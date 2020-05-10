@@ -1,4 +1,3 @@
-# Spin-Box
 ## What is this?
 A ModalWindow class made using the Custom Elements API and vanilla javascript..
 
