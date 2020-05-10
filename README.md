@@ -17,4 +17,15 @@ var spinBox = new SpinBox({label: "spin box", min: 0});
 
 // append to your page
 document.body.appendChild(spinBox);
+
+// Set value with .setValue method
+// Get value with .getValue method
+// Listen for changes by adding event listener:
+
+spinBox.addEventListener("spinboxChange", function(evt) {
+  console.log("spinBox changed by", evt.detail.delta);
+  console.log("spinBox value now", evt.detail.value);
+}, false);
+
+// Depends CoolButton.js, spinBox.css
 ```
