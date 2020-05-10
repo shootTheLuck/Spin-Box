@@ -1,6 +1,6 @@
 /*
 * Spinbox custom element.
-* Adapted from Kate Morley "A spin box widget" http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
+* Adapted from Kate Morley"s "A spin box widget" http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
 *
 * Set value with .setValue method
 * Get value with .getValue method
@@ -23,30 +23,30 @@ class SpinBox extends HTMLElement {
         this.className = opts.className || "spinBox";
         this.step = opts.step || parseFloat(this.getAttribute("step")) || 1;
         this.decimals = opts.decimals || parseFloat(this.getAttribute("decimals")) || 0;
-
+        this.width = opts.width || parseFloat(this.getAttribute("width")) || 14;
         var labelText = opts.label || this.getAttribute("label") || "Spin Box";
 
-        /// assign min if specified in opts or the dom
+        /// assign min if specified in opts or markup html
         /// default = -Infinity
         if (opts.min !== undefined) {
             this.min = opts.min;
         } else {
-            let domAttributeMin = parseFloat(this.getAttribute("min"));
-            if (!isNaN(domAttributeMin)) {
-                this.min = domAttributeMin;
+            let htmlMin = parseFloat(this.getAttribute("min"));
+            if (!isNaN(htmlMin)) {
+                this.min = htmlMin;
             } else {
                 this.min = -Infinity;
             }
         }
 
-        /// assign max if specified in opts or the dom
+        /// assign max if specified in opts or markup html
         /// default = Infinity
         if (opts.max !== undefined) {
             this.max = opts.max;
         } else {
-            let domAttributeMax = parseFloat(this.getAttribute("max"));
-            if (!isNaN(domAttributeMax)) {
-                this.max = domAttributeMax;
+            let htmlMax = parseFloat(this.getAttribute("max"));
+            if (!isNaN(htmlMax)) {
+                this.max = htmlMax;
             } else {
                 this.max = Infinity;
             }
@@ -57,29 +57,25 @@ class SpinBox extends HTMLElement {
         this.label.textContent = labelText;
         this.appendChild(this.label);
 
-        var div = document.createElement("div");
-        this.appendChild(div);
-
         this.input = document.createElement("input");
-        div.appendChild(this.input);
+        this.appendChild(this.input);
 
         var upButton = new CoolButton(this.start.bind(this, true));
-        div.appendChild(upButton);
+        this.appendChild(upButton);
         var upArrow = document.createElement("i");
         upButton.appendChild(upArrow);
 
         var downButton = new CoolButton(this.start.bind(this, false));
-        div.appendChild(downButton);
+        this.appendChild(downButton);
         var downArrow = document.createElement("i");
         downButton.appendChild(downArrow);
 
-        // apply classes
-        div.className = this.className + "Div";
         this.label.className = this.className + "Label";
         upButton.className = this.className + "Up";
         upArrow.className = this.className + "UpArrow";
         downButton.className = this.className + "Down";
         downArrow.className = this.className + "DownArrow";
+        this.style.width = this.width + "em";
 
         // add listeners
         this.input.addEventListener("wheel", this.handleMouseWheel.bind(this));
@@ -91,9 +87,9 @@ class SpinBox extends HTMLElement {
         if (opts.value !== undefined) {
             this.setValue(opts.value);
         } else {
-            let attValue = this.getAttribute("value");
-            if (attValue) {
-                this.setValue(attValue);
+            let htmlValue = this.getAttribute("value");
+            if (htmlValue) {
+                this.setValue(htmlValue);
             } else {
                 this.setValue(0);
             }
