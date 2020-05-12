@@ -26,6 +26,4 @@ spinBox.addEventListener("spinboxChange", function(evt) {
   console.log("spinBox changed by", evt.detail.delta);
   console.log("spinBox value now", evt.detail.value);
 }, false);
-
-// Depends spinBox.css
 ```
