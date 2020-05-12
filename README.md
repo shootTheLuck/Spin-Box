@@ -27,5 +27,5 @@ spinBox.addEventListener("spinboxChange", function(evt) {
   console.log("spinBox value now", evt.detail.value);
 }, false);
 
-// Depends CoolButton.js, spinBox.css
+// Depends spinBox.css
 ```
