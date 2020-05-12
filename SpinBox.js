@@ -14,7 +14,59 @@
 * Depends CoolButton.js, spinbox.css
 */
 
-import CoolButton from "./CoolButton.js";
+/// first a class for the buttons:
+
+var SpinBoxButton = (function() {
+    
+    var listener = null;
+    var timer = 10;
+    var timerAmount = 10;
+    var switchToFastModeTimer = 0;
+    var switchToFastModeAfter = 5;
+
+    function stop() {
+        cancelAnimationFrame(listener);
+        timer = 10;
+        timerAmount = 10;
+        switchToFastModeTimer = 0;
+    }
+
+    function reactToButton(action) {
+        timer += 1;
+        listener = requestAnimationFrame(() => reactToButton(action));
+        if (timer > timerAmount) {
+            timer = 0;
+            timerAmount -= 1;
+            switchToFastModeTimer += 1;
+            if (switchToFastModeTimer > switchToFastModeAfter) {
+                timerAmount = 1;
+            }
+            action();
+        }
+    }
+
+    class CoolButton extends HTMLElement {
+
+        constructor(action) {
+            super();
+            if (!action) {
+                console.error("CoolButton needs to be created with an action callback as first(only) parameter");
+            }
+            this.addEventListener("mousedown", () => {
+                listener = requestAnimationFrame(() => reactToButton(action));
+            });
+            this.addEventListener("mouseleave", stop);
+            this.addEventListener("mouseup", stop);
+        }
+
+    }
+
+    customElements.define("cool-button", CoolButton);
+
+    return CoolButton;
+
+})();
+
 
 class SpinBox extends HTMLElement {
 
@@ -60,12 +112,12 @@ class SpinBox extends HTMLElement {
         this.input = document.createElement("input");
         this.appendChild(this.input);
 
-        var upButton = new CoolButton(this.start.bind(this, true));
+        var upButton = new SpinBoxButton(this.start.bind(this, true));
         this.appendChild(upButton);
         var upArrow = document.createElement("i");
         upButton.appendChild(upArrow);
 
-        var downButton = new CoolButton(this.start.bind(this, false));
+        var downButton = new SpinBoxButton(this.start.bind(this, false));
         this.appendChild(downButton);
         var downArrow = document.createElement("i");
         downButton.appendChild(downArrow);
