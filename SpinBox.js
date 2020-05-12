@@ -14,7 +14,7 @@
 * Depends CoolButton.js, spinbox.css
 */
 
-/// first a class for the buttons:
+/// first a helper class for the buttons:
 
 var SpinBoxButton = (function() {
     
