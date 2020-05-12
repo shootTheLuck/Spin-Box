@@ -11,7 +11,7 @@
 *      console.log("spinBox value now", evt.detail.value);
 *  }, false);
 *
-* Depends CoolButton.js, spinbox.css
+* Depends spinbox.css
 */
 
 /// first a helper class for the buttons:
