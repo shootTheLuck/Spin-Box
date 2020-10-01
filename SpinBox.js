@@ -1,6 +1,7 @@
 /*
 * Spinbox custom element.
-* Adapted from Kate Morley"s "A spin box widget" http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
+* Adapted from Kate Morley's
+*   "A spin box widget" http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
 *
 * Set value with .setValue method
 * Get value with .getValue method
@@ -17,7 +18,7 @@
 /// first a helper class for the buttons:
 
 var SpinBoxButton = (function() {
-    
+
     var listener = null;
     var timer = 10;
     var timerAmount = 10;
@@ -128,6 +129,7 @@ class SpinBox extends HTMLElement {
         downButton.className = this.className + "Down";
         downArrow.className = this.className + "DownArrow";
         this.style.width = this.width + "em";
+        this.label.style.width = 200 + "em";
 
         // add listeners
         this.input.addEventListener("wheel", this.handleMouseWheel.bind(this));
@@ -207,4 +209,4 @@ class SpinBox extends HTMLElement {
 
 customElements.define("spin-box", SpinBox);
 
-export default SpinBox;
+export {SpinBox};

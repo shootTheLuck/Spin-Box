@@ -6,15 +6,11 @@
     width: 14em;
     margin: 0.3em;
     padding: 0;
-/*
-    border: 0.1em solid red;
-*/
 }
 
 .spinBoxLabel {
     padding: 0.5em;
     user-select: none;
-    width: 7em;
     vertical-align: middle;
 }
 

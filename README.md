@@ -7,10 +7,10 @@ A spin box class made using vanilla Javascript and the Custom Elements API.  It'
 You might not!  I did because I didn't like the look of Firefox's input type=number and I wanted a different dynamic for the button behavior.
 
 ## How do I use it?
-You'll want to reference spinBox.css then: 
+You'll want to reference spinBox.css then:
 ```javascript
 // import
-import SpinBox from "./SpinBox.js";
+import {SpinBox} from "./SpinBox.js";
 
 // create instance
 var spinBox = new SpinBox({label: "spin box", min: 0});
