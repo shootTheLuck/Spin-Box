@@ -137,7 +137,7 @@ class SpinBox extends HTMLElement {
         this.input.addEventListener("change", this.handleInputChange.bind(this));
         this.input.addEventListener("focus", this.input.select);
 
-        this.event = new CustomEvent("spinboxChange", {detail: {delta: 0, value: 0}});
+        this.changeEvent = new CustomEvent("change", {detail: {delta: 0, value: 0}});
 
         if (opts.value !== undefined) {
             this.setValue(opts.value);
@@ -201,9 +201,9 @@ class SpinBox extends HTMLElement {
         this.input.select();
 
         var currentValue = this.getValue();
-        this.event.detail.delta = currentValue - this.oldValue;
-        this.event.detail.value = currentValue;
-        this.dispatchEvent(this.event);
+        this.changeEvent.detail.delta = currentValue - this.oldValue;
+        this.changeEvent.detail.value = currentValue;
+        this.dispatchEvent(this.changeEvent);
 
         this.oldValue = currentValue;
     }
