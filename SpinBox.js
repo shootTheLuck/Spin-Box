@@ -134,10 +134,9 @@ class SpinBox extends HTMLElement {
         // add listeners
         this.input.addEventListener("wheel", this.handleMouseWheel.bind(this));
         this.input.addEventListener("keydown", this.handleKeyDown.bind(this));
-        this.input.addEventListener("change", this.handleInputChange.bind(this));
         this.input.addEventListener("focus", this.input.select);
 
-        this.changeEvent = new CustomEvent("change", {detail: {delta: 0, value: 0}});
+        this.changeEvent = new CustomEvent("spinBoxChange", {detail: {delta: 0, value: 0}});
 
         if (opts.value !== undefined) {
             this.setValue(opts.value);

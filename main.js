@@ -5,7 +5,7 @@ var spinBox = new SpinBox({label: "scaleSpinner", decimals: 2, min: -1, value: -
 document.body.appendChild(spinBox);
 
 
-spinBox.addEventListener("change", function(evt) {
+spinBox.addEventListener("spinBoxChange", function(evt) {
   console.log("spinBox changed by", evt.detail.delta);
   console.log("spinBox value now", evt.detail.value);
 }, false);
