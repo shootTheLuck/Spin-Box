@@ -1,5 +1,6 @@
 ## What is this?
-A spin box class made using vanilla Javascript and the Custom Elements API. It's adapted from Kate Morley's Spin Box Widget here: http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
+A spin box class made using vanilla Javascript and the Custom Elements API.
+It's adapted from Kate Morley's Spin Box Widget http://code.iamkate.com/javascript/spin-box-widget CC0 1.0
 
 [Live Demo Here](https://shootTheLuck.github.io/Spin-Box)
 
