@@ -1,7 +1,7 @@
 /*
 * Spinbox custom element.
-* Adapted from Kate Morley's
-*   "A spin box widget" http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
+* Adapted from Kate Morley
+* http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
 *
 * Set value with .setValue method
 * Get value with .getValue method
@@ -17,56 +17,54 @@
 
 /// first a helper class for the buttons:
 
-var SpinBoxButton = (function() {
+class SpinBoxButton extends HTMLElement {
 
-    var listener = null;
-    var timer = 10;
-    var timerAmount = 10;
-    var switchToFastModeTimer = 0;
-    var switchToFastModeAfter = 5;
-
-    function stop() {
-        cancelAnimationFrame(listener);
-        timer = 10;
-        timerAmount = 10;
-        switchToFastModeTimer = 0;
-    }
-
-    function reactToButton(action) {
-        timer += 1;
-        listener = requestAnimationFrame(() => reactToButton(action));
-        if (timer > timerAmount) {
-            timer = 0;
-            timerAmount -= 1;
-            switchToFastModeTimer += 1;
-            if (switchToFastModeTimer > switchToFastModeAfter) {
-                timerAmount = 1;
-            }
-            action();
-        }
-    }
-
-    class CoolButton extends HTMLElement {
-
-        constructor(action) {
-            super();
-            if (!action) {
-                console.error("CoolButton needs to be created with an action callback as first(only) parameter");
-            }
-            this.addEventListener("mousedown", () => {
-                listener = requestAnimationFrame(() => reactToButton(action));
-            });
-            this.addEventListener("mouseleave", stop);
-            this.addEventListener("mouseup", stop);
+    constructor(action) {
+        super();
+        if (!action) {
+            console.error("SpinBoxButton needs to be created with an action callback as first(only) parameter");
         }
 
+        this.action = action;
+        this.animation = null;
+        this.timer = 10;
+        this.timerAmount = 10;
+        this.switchToFastModeTimer = 0;
+        this.switchToFastModeAfter = 5;
+
+        this.addEventListener("mousedown", () => {
+            // this.reactToButton();
+            this.animation = requestAnimationFrame(() => this.reactToButton());
+            this.addEventListener("mouseleave", this.stop);
+            this.addEventListener("mouseup", this.stop);
+        });
     }
 
-    customElements.define("cool-button", CoolButton);
+    stop() {
+        cancelAnimationFrame(this.animation);
+        this.timer = 10;
+        this.timerAmount = 10;
+        this.switchToFastModeTimer = 0;
+        this.removeEventListener("mouseleave", this.stop);
+        this.removeEventListener("mouseup", this.stop);
+    }
 
-    return CoolButton;
+    reactToButton() {
+        this.timer += 1;
+        this.animation = requestAnimationFrame(() => this.reactToButton());
+        if (this.timer > this.timerAmount) {
+            this.timer = 0;
+            this.timerAmount -= 1;
+            this.switchToFastModeTimer += 1;
+            if (this.switchToFastModeTimer > this.switchToFastModeAfter) {
+                this.timerAmount = 1;
+            }
+            this.action();
+        }
+    }
+}
 
-})();
+customElements.define("spinbox-button", SpinBoxButton);
 
 
 class SpinBox extends HTMLElement {
@@ -77,7 +75,8 @@ class SpinBox extends HTMLElement {
         this.step = opts.step || parseFloat(this.getAttribute("step")) || 1;
         this.decimals = opts.decimals || parseFloat(this.getAttribute("decimals")) || 0;
         this.width = opts.width || parseFloat(this.getAttribute("width")) || 14;
-        var labelText = opts.label || this.getAttribute("label") || "Spin Box";
+        this.labelText = opts.label || this.getAttribute("label") || "Spin Box";
+        this.initialValue = (opts.value !== undefined) ? opts.value : null;
 
         /// assign min if specified in opts or markup html
         /// default = -Infinity
@@ -105,20 +104,22 @@ class SpinBox extends HTMLElement {
             }
         }
 
+        // connectedCallback() {
+
         this.label = document.createElement("label");
 
-        this.label.textContent = labelText;
+        this.label.textContent = this.labelText;
         this.appendChild(this.label);
 
         this.input = document.createElement("input");
         this.appendChild(this.input);
 
-        var upButton = new SpinBoxButton(this.start.bind(this, true));
+        var upButton = new SpinBoxButton(this.startUp.bind(this));
         this.appendChild(upButton);
         var upArrow = document.createElement("i");
         upButton.appendChild(upArrow);
 
-        var downButton = new SpinBoxButton(this.start.bind(this, false));
+        var downButton = new SpinBoxButton(this.startDown.bind(this));
         this.appendChild(downButton);
         var downArrow = document.createElement("i");
         downButton.appendChild(downArrow);
@@ -138,8 +139,8 @@ class SpinBox extends HTMLElement {
 
         this.changeEvent = new CustomEvent("spinBoxChange", {detail: {delta: 0, value: 0}});
 
-        if (opts.value !== undefined) {
-            this.setValue(opts.value);
+        if (this.initialValue !== undefined) {
+            this.setValue(this.initialValue);
         } else {
             let htmlValue = this.getAttribute("value");
             if (htmlValue) {
@@ -186,10 +187,16 @@ class SpinBox extends HTMLElement {
         if (e.key == "Enter") this.handleInputChange(e, false);
     }
 
-    start(up) {
+    startUp() {
         if (this.input.disabled) return;
+        this.updateStep = this.step;
+        let value = parseFloat(this.input.value) + this.updateStep;
+        this.displayValue(value);
+    }
 
-        this.updateStep = (up ? this.step : -this.step);
+    startDown() {
+        if (this.input.disabled) return;
+        this.updateStep = -this.step;
         let value = parseFloat(this.input.value) + this.updateStep;
         this.displayValue(value);
     }
