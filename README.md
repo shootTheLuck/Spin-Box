@@ -1,10 +1,10 @@
 ## What is this?
-A spin box class made using vanilla Javascript and the Custom Elements API.  It's adapted from Kate Morley's "A spin box widget in Javascript" http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
+A spin box class made using vanilla Javascript and the Custom Elements API. It's adapted from Kate Morley's Spin Box Widget here: http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
 
 [Live Demo Here](https://shootTheLuck.github.io/Spin-Box)
 
 ## Why would I want to use this?
-You might not!  I did because I didn't like the look of Firefox's input type=number and I wanted a different dynamic for the button behavior.
+I didn't like the look of the stock html input element type=number and found it to be unstylable. I also wanted a different dynamic for the button behavior.
 
 ## How do I use it?
 You'll want to reference spinBox.css then:
