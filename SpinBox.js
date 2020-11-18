@@ -189,15 +189,18 @@ class SpinBox extends HTMLElement {
 
     startUp() {
         if (this.input.disabled) return;
-        this.updateStep = this.step;
-        let value = parseFloat(this.input.value) + this.updateStep;
+        let value = parseFloat(this.input.value) || 0;
+        // this.updateStep = this.step;
+        value += this.step;
         this.displayValue(value);
     }
 
     startDown() {
         if (this.input.disabled) return;
-        this.updateStep = -this.step;
-        let value = parseFloat(this.input.value) + this.updateStep;
+        let value = parseFloat(this.input.value) || 0;
+        // this.updateStep = -this.step;
+        // let value = parseFloat(this.input.value) + this.updateStep;
+        value -= this.step;
         this.displayValue(value);
     }
 
