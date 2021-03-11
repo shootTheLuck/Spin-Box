@@ -1,19 +1,19 @@
 /*
-* Spinbox custom element.
-* Adapted from Kate Morley
-* http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
-*
-* Set value with .setValue method
-* Get value with .getValue method
-* Listen for changes by adding event listener:
-*
-*  spinBox.addEventListener("spinboxChange", function(evt) {
-*      console.log("spinBox changed by", evt.detail.delta);
-*      console.log("spinBox value now", evt.detail.value);
-*  }, false);
-*
-* Depends spinbox.css
-*/
+ * Spinbox custom element.
+ * Adapted from Kate Morley
+ * http://code.iamkate.com/javascript/spin-box-widget/ CC0 1.0
+ *
+ * Set value with .setValue method
+ * Get value with .getValue method
+ * Listen for changes by adding event listener:
+ *
+ *  spinBox.addEventListener("spinboxChange", function(evt) {
+ *      console.log("spinBox changed by", evt.detail.delta);
+ *      console.log("spinBox value now", evt.detail.value);
+ *  }, false);
+ *
+ * Depends spinbox.css
+ */
 
 /// first a helper class for the buttons:
 
@@ -76,7 +76,7 @@ class SpinBox extends HTMLElement {
         this.decimals = opts.decimals || parseFloat(this.getAttribute("decimals")) || 0;
         this.width = opts.width || parseFloat(this.getAttribute("width")) || 14;
         this.labelText = opts.label || this.getAttribute("label") || "Spin Box";
-        this.initialValue = (opts.value !== undefined) ? opts.value : null;
+        this.initialValue = (opts.value !== undefined) ? opts.value : this.getAttribute("value");
 
         /// assign min if specified in opts or markup html
         /// default = -Infinity
@@ -137,7 +137,12 @@ class SpinBox extends HTMLElement {
         this.input.addEventListener("keydown", this.handleKeyDown.bind(this));
         this.input.addEventListener("focus", this.input.select);
 
-        this.changeEvent = new CustomEvent("spinBoxChange", {detail: {delta: 0, value: 0}});
+        this.changeEvent = new CustomEvent("spinBoxChange", {
+            detail: {
+                delta: 0,
+                value: 0
+            }
+        });
 
         if (this.initialValue !== undefined) {
             this.setValue(this.initialValue);
@@ -166,6 +171,7 @@ class SpinBox extends HTMLElement {
         value = Math.max(this.min, value);
         value = Math.min(this.max, value);
         this.input.value = value.toFixed(this.decimals);
+        this.value = value;
     }
 
     handleInputChange(e) {
@@ -176,7 +182,7 @@ class SpinBox extends HTMLElement {
 
     handleMouseWheel(e) {
         if (document.activeElement == this.input) {
-            let direction = (e.deltaY < 0)? true : false;
+            let direction = (e.deltaY < 0) ? true : false;
             this.start(direction);
         }
     }
